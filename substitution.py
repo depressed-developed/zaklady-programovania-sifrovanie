@@ -6,17 +6,17 @@ def generate_substitution_alphabet():
     Generates a random substitution alphabet.
     """
     alphabet = list(string.ascii_uppercase)
-    shuffled_alphabet = alphabet[:]
+    shuffled_alphabet = alphabet[:] #creates a shallow copy of alphabet
     random.shuffle(shuffled_alphabet)
     return "".join(shuffled_alphabet)
 
-def create_cipher_dict(alphabet):
+def create_cipher_dict(shuffled_alphabet):
     """
     Creates encoding and decoding dictionaries based on a substitution alphabet.
     """
     original_alphabet = string.ascii_uppercase
-    encode_dict = {original_alphabet[i]: alphabet[i] for i in range(26)}
-    decode_dict = {alphabet[i]: original_alphabet[i] for i in range(26)}
+    encode_dict = {original_alphabet[i]: shuffled_alphabet[i] for i in range(26)}
+    decode_dict = {shuffled_alphabet[i]: original_alphabet[i] for i in range(26)}
     return encode_dict, decode_dict
 
 def substitution_encode(plaintext, encode_dict):
@@ -51,17 +51,27 @@ def substitution_decode(ciphertext, decode_dict):
 
 # Example usage
 # Generate a random substitution alphabet
-substitution_alphabet = generate_substitution_alphabet()
-print(f"Substitution Alphabet: {substitution_alphabet}")
+
 
 # Create encoding and decoding dictionaries
-encode_dict, decode_dict = create_cipher_dict(substitution_alphabet)
+
 
 # Encode a message
-plaintext = "HELLO SUBSTITUTION CIPHER"
-encoded_message = substitution_encode(plaintext, encode_dict)
-print(f"Encoded Message: {encoded_message}")
+
 
 # Decode the message
-decoded_message = substitution_decode(encoded_message, decode_dict)
-print(f"Decoded Message: {decoded_message}")
+
+while True:
+    try: 
+        substitution_alphabet = generate_substitution_alphabet()
+        encode_dict, decode_dict = create_cipher_dict(substitution_alphabet)
+        print(f"Substitution Alphabet: {substitution_alphabet}")
+        plaintext = str(input("Please enter a string to encode: "))
+        encoded_message = substitution_encode(plaintext, encode_dict)
+        print(f"Encoded Message: {encoded_message}")
+        decoded_message = substitution_decode(encoded_message, decode_dict)
+        print(f"Decoded Message: {decoded_message}")
+    except ValueError:
+        print("Message must be of type string.")
+    except Exception as e:
+        print(f"Unexpected error has occured: {e}")
