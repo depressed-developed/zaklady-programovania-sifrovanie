@@ -14,7 +14,7 @@ def affine_encode(plaintext, a, b):
     
     for char in plaintext.upper():
         if char.isalpha():  # Encode only alphabet characters
-            x = ord(char) - ord('A')
+            x = ord(char) - ord('A') #value in the alphabet
             encoded_char = (a * x + b) % m
             encoded_text.append(chr(encoded_char + ord('A')))
         else:
@@ -56,6 +56,37 @@ def affine_bruteforce_decode(ciphertext):
                     continue  # Skip if there's no modular inverse for this a
 
     return possible_decodings
+
+
+while True:
+    try:
+        user_input = str(input("Do you wish do encode or decode a message? e/d "))
+        if (user_input == "e"):
+            try:
+                message_to_encode = str(input("Please enter a message to encode: "))
+                first_key = int(input("Please enter the first key to encode with: "))
+                second_key =  int(input("Please enter the second key to encode with: "))
+                encoded_message = affine_encode(message_to_encode, first_key, second_key)
+                print(f"Encoded Message: {encoded_message}")
+            except ValueError:
+                print("Input must be a whole number")
+            except Exception as e:
+                print(f"An unexpected error has occured: {e}")
+        elif (user_input == "d"):
+            try:
+                message_to_decode = str(input("Please enter a message to decode: "))
+                print("Brute-force decoding results:")
+                possible_decodings = affine_bruteforce_decode(encoded_message)
+                for a, b, decoded_text in possible_decodings:
+                    print(f"a={a}, b={b}: {decoded_text}")
+            except Exception as e:
+                print(f"An unexpected error has occured: {e}")
+        else:
+            print("Enter 'e' to encode or 'd' to decode")
+    except ValueError:
+        print(f'Message must be of type string')
+    except Exception as e:
+        print(f'An unexpected error has occured: {e}')
 
 # Example usage
 plaintext = "HELLOAFFINECIPHER"
