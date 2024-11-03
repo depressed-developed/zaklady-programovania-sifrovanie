@@ -49,17 +49,7 @@ def substitution_decode(ciphertext, decode_dict):
 
     return "".join(decoded_message)
 
-# Example usage
-# Generate a random substitution alphabet
 
-
-# Create encoding and decoding dictionaries
-
-
-# Encode a message
-
-
-# Decode the message
 
 while True:
     try: 
