@@ -88,14 +88,3 @@ while True:
     except Exception as e:
         print(f'An unexpected error has occured: {e}')
 
-# Example usage
-plaintext = "HELLOAFFINECIPHER"
-a, b = 5, 8  # Sample keys
-encoded_message = affine_encode(plaintext, a, b)
-print(f"Encoded Message: {encoded_message}")
-
-# Brute-force decode the encoded message
-print("Brute-force decoding results:")
-possible_decodings = affine_bruteforce_decode(encoded_message)
-for a, b, decoded_text in possible_decodings:
-    print(f"a={a}, b={b}: {decoded_text}")
